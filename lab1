@@ -1,0 +1,50 @@
+1)Ստեղծել lab1 անունով դիրեկտորիա, որում ստեղծել 4 տեքստային ֆայլ՝ file.txt, file1.txt, file2.txt, file3.txt եւ 2 դիրեկտորիա՝ dir1, dir2։  
+macbook@MacBooks-MacBook-Air ~ % cd Desktop
+macbook@MacBooks-MacBook-Air Desktop % mkdir lab1
+macbook@MacBooks-MacBook-Air Desktop % cd lab1
+macbook@MacBooks-MacBook-Air lab11 % touch file.txt file1.txt file2.txt file3.txt
+macbook@MacBooks-MacBook-Air lab11 % mkdir dir1 dir2
+
+2)Կատարել հետեւյալ հրամանները եւ բացատրել տարբերությունը. 
+ls *.txt - կամայական ֆայլ, որ ավարտվում է .txt-ով 
+ls * .txt - ֆայլ, որն անունից հետո ունի բացատ ,ապա .txt
+
+3)Ցուցադրել բոլոր տեքստային ֆայլերը (ավարտվում է .txt սիմվոլներով), որոնց  անվանումը սկսվում է f սիմվոլով եւ բաղկացած է 4 սիմվոլից։  
+macbook@MacBooks-MacBook-Air lab11 % ls [f]???.txt
+file.txt
+
+4)Ցուցադրել բոլոր տեքստային ֆայլերը, որոնց անվանումը սկսվում է file բառով, որին  հաջորդում է թվանշան։  
+macbook@MacBooks-MacBook-Air lab11 % ls file[[:digit:]].txt
+file1.txt	file2.txt	file3.txt
+
+5)Ցուցադրել բոլոր տեքստային ֆայլերը, որոնց անվան վերջին սիմվոլը փոքրատառ է,  կամ 1, 2 թվանշաններից որեւէ մեկը։  
+macbook@MacBooks-MacBook-Air lab11 % ls *[[:lower:]12].txt
+file.txt	file1.txt	file2.txt
+
+6)Պատճենել /etc/passwd ֆայլը lab1 դիրեկտորիայում։  
+macbook@MacBooks-MacBook-Air lab11 % mkdir etc
+macbook@MacBooks-MacBook-Air lab11 % touch passwd
+macbook@MacBooks-MacBook-Air lab1 % cp /etc/passwd ~/lab1/
+
+7)Անվանափոխել պատճենված ֆայլը՝ այն դարձնելով new: Տեղափոխել new ֆայլը դեպի  dir1, այնուհետեւ տեղափոխել դեպի dir2:  
+
+macbook@MacBooks-MacBook-Air Desktop % cd lab1
+macbook@MacBooks-MacBook-Air lab11 % mv passwd new
+macbook@MacBooks-MacBook-Air lab11 % mv new dir1
+macbook@MacBooks-MacBook-Air lab11 % cd dir1
+macbook@MacBooks-MacBook-Air dir11 % mv new../dir2
+
+8)Անվանափոխել dir2-ը՝ այն դարձնելով dir3։ Տեղափոխել dir3-ը դեպի dir1։  
+macbook@MacBooks-MacBook-Air dir11 % cd -
+~/Desktop/lab11
+macbook@MacBooks-MacBook-Air lab11 % mv dir2 dir3
+macbook@MacBooks-MacBook-Air lab11 % mv dir3 dir1
+
+9)Տեղափոխել dir3-ում գտնվող new ֆայլը դեպի lab1։  
+macbook@MacBooks-MacBook-Air lab11 % mv dir3/new ~/lab1/
+
+10)Ջնջել lab1 դիրեկտորիան։ 
+
+macbook@MacBooks-MacBook-Air lab11 % cd ..
+macbook@MacBooks-MacBook-Air Desktop % rm -r lab1
+

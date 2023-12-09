@@ -1,0 +1,286 @@
+ 1.Գրել ծրագիր, որը ինտերակտիվ ռեժիմում կստանա [0, 3] միջակայքի որեւէ թիվ, եւ արգումենտի արժեքից կախված կկատարի հետեւյալ գործողությունները.
+ 0 – ավարտել ծրագիրը։
+ 1 – արտածել /home/student դիրեկտորիայի ֆայլերի ցուցակը։
+ 2 – արտածել /home/student դիրեկտորիայի տեքստային ֆայլերի քանակը։
+ 3 – արտածել աշխատանքային դիրեկտորիան։
+Գործողությունները կրկնել մինչեւ 0 արժեքի ներմուծումը։ Օգտագործել case օպերատոր։
+
+#!/bin/bash
+
+while true; do
+    echo " number : "
+    read num
+
+    case $num in
+        0)
+            echo "end of program."
+            break
+            ;;
+        1)
+            echo "copying files."
+            ls /home/student
+            ;;
+        2)
+            echo "counting the number of text files in /home/student directory:"
+            find /home/student -maxdepth 1 -type f -name "*.txt" | wc -l
+            ;;
+        3)
+            echo "printing the working directory:"
+            pwd
+            ;;
+        *)
+            echo "Invalid number."
+            ;;
+    esac
+done
+
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash operation.sh
+number : 
+2
+counting the number of text files in /home/student directory:
+1
+ number : 
+3
+printing the working directory:
+/Users/macbook/Desktop
+number : 
+1
+copying files.
+Harvard .app
+IntelliJ IDEA CE.app
+R
+RStudio.app
+Scratch 3.app
+Telegram.app
+Xcode.app
+hanrahashiv.txt
+lab1
+lab3
+moodle
+project
+~$201.docx
+ number : 
+0
+end of program.
+
+2. Գրել ծրագիր, որը որպես արգումենտ կստանա տարվա ամսի անունը եւ կվերադարձնի տվյալ ամսում առկա օրերի քանակը։ Օգտագործել case օպերատոր։
+
+#!/bin/bash
+
+month=$1
+
+case $month in
+    "January" | "March" | "May" | "July" | "August" | "October" | "December")
+        echo "31 days"
+        ;;
+    "April" | "June" | "September" | "November")
+        echo "30 days"
+        ;;
+    "February")
+        echo "28 or 29 days"
+        ;;
+    *)
+        echo "Invalid month name."
+        ;;
+esac
+
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash month.sh May
+31 days
+macbook@MacBooks-MacBook-Air Desktop % bash month.sh February
+28 or 29 days
+
+
+3. Գրել <<Հաշվիչ>> ծրագիր, որը կստանա ճիշտ 3 արժեք հետեւյալ հաջորդականությամբ. թիվ, գործողություն, թիվ։ Օր՝ 2 + 3։ Արժեքները ներմուծել ինտերակտիվ ռեժիմում (read հրամանի միջոցով)։ Գործողության համար սահմանել հետեւյալ ընդունելի արժեքները. + - * / **։ Արտածել գործողության արդյունքը։ Գործողության տիպը որոշելու համար օգտագործել case օպերատոր։
+
+#!/bin/bash
+
+echo "Enter number, action, number: "
+read num1 action num2
+
+case $action in
+    "+")
+        result=$(echo "$num1 + $num2" | bc)
+        echo "Result: $result"
+        ;;
+    "-")
+        result=$(echo "$num1 - $num2" | bc)
+        echo "Result: $result"
+        ;;
+    "*")
+        result=$(echo "$num1 * $num2" | bc)
+        echo "Result: $result"
+        ;;
+    "/")
+        result=$(echo "scale=2; $num1 / $num2" | bc)
+        echo "Result: $result"
+        ;;
+    "**")
+        result=$(echo "$num1 ^ $num2" | bc)
+        echo "Result: $result"
+        ;;
+    *)
+        echo "Invalid action."
+        ;;
+esac
+
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash calculator.sh
+Enter number, action, number: 
+3 + 9
+Result: 12
+
+
+4. Գրել ծրագիր, որը որպես հրամանային տողի արգումենտ կստանա ֆայլի անուն։ Եթե ֆայլը գոյություն ունի եւ ունի կարդալու թույլտվություն, ապա արտածել ֆայլի պարունակությունը, հակառակ դեպքում արտածել համապատասխան հաղորդագրություն։
+
+#!/bin/bash
+
+file_name=$1
+
+if [ -f "$file_name" ] && [ -r "$file_name" ]; then
+    echo "File '$file_name' contents:"
+    cat "$file_name"
+else
+    echo "File '$file_name' either does not exist or does not have read permission."
+fi
+
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash readperm.sh hello.zip
+File 'hello.zip' either does not exist or does not have read permission.
+macbook@MacBooks-MacBook-Air Desktop % bash readperm.sh calc.sh
+File 'calc.sh' contents:
+#!/bin/bash
+if [ "$#" -ne 3 ]; then
+    echo "Error: Please provide exactly 3 values (number, action, number)."
+    exit 1
+fi
+
+
+number1=$1
+action=$2
+number2=$3
+
+if ! [[ "$number1" =~ ^[+-]?[0-9]*[.]?[0-9]+$ && "$number2" =~ ^[+-]?[0-9]*[.]?[0-9]+$ ]]; then
+    echo "Error: Invalid number input."
+    exit 1
+fi
+
+case "$action" in
+    "+" | "-" | "*" | "/" | "**")
+        result=$(bc -l <<< "$number1 $action $number2")
+        echo "Result: $result"
+        ;;
+    *)
+        echo "Error: Invalid action. Please use one of the following: +, -, *, /, **"
+        exit 1
+        ;;
+esac
+
+
+5. Գրել cp ծրագրի պատճենը՝ առանց cp հրամանից օգտվելու։ Ծրագիրը պետք է որպես արգումենտներ ստանա 2 ֆայլերի անուններ, եւ պատճենի առաջին ֆայլի պարունակությունը 2-րդի մեջ։ Իրականացնել ծրագրի պատշաճ աշխատանքի համար հարկավոր ստուգումներ (ֆայլը գոյություն ունի, ունի կարդալու թույլտվություն)։
+
+#!/bin/bash
+
+first_file=$1
+second_file=$2
+
+if [ ! -f "$first_file" ] || [ ! -r "$first_file" ]; then
+    echo " File '$first_file' either does not exist or does not have read permission."
+    exit 1
+fi
+
+if [ -e "$second_file" ]; then
+    cp "$first_file" "$second_file"
+    echo "File '$first_file' successfully copied to '$second_file'."
+fi
+
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash copy.sh calc.sh operation.sh
+File 'calc.sh' successfully copied to 'operation.sh'.
+
+
+6. Գրել ծրագիր, որը որպես հրամանային տողի արգումենտներ կստանա 2 թիվ եւ կարտածի այդ թվերի գումարը։ Իրականացնել արժեքների վավերացում։
+
+#!/bin/bash
+
+re='^[+-]?[0-9]+([.][0-9]+)?$'
+if ! [[ $1 =~ $re ]] || ! [[ $2 =~ $re ]]; then
+    echo "arguments must be numeric."
+    exit 1
+fi
+
+sum=$(echo "$1 + $2" | bc)
+echo "sum of $1 and $2 is: $sum"
+
+macbook@MacBooks-MacBook-Air ~ % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash sum.sh 2 3
+sum of 2 and 3 is: 5
+
+
+7. Գրել ծրագիր, որը որպես հրամանային տողի արգումենտներ կստանա կամայական քանակով արժեքներ եւ նույնությամբ կարտածի այդ արժեքները։ Օգտագործել while ցիկլ եւ shift օպերատոր։
+
+#!/bin/bash
+
+while [ "$#" -gt 0 ]; do
+    echo "$1"
+    shift
+done
+
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash print.sh 1 2 3 4
+1
+2
+3
+4
+
+
+8. Իրականացնել 7-րդ կետը՝ օգտագործելով for ցիկլ եւ $@ հատուկ փոփոխականը։
+
+#!/bin/bash
+
+for arg in "$@"; do
+    echo "$arg"
+done
+
+macbook@MacBooks-MacBook-Air Desktop % cd  /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash printw@.sh 1 2 3 4 5 
+1
+2
+3
+4
+5
+
+
+9. Գրել ծրագիր, որը որպես հրամանային տողի արգումենտներ կստանա կամայական քանակով թվեր եւ կարտածի այդ թվերի գումարը։
+
+#!/bin/bash
+
+sum=0
+for arg in "$@"; do
+        sum=$(echo "$sum + $arg" | bc)
+done
+
+echo "Sum of the numbers: $sum"
+
+macbook@MacBooks-MacBook-Air Desktop % bash sumofnums.sh 12 22 3 2 1
+Sum of the numbers: 40
+
+
+10. Գրել ծրագիր, որը որպես հրամանային տողի արգումենտներ կստանա կամայական քանակով թվեր եւ կարտածի զույգ թվերի քանակը։
+
+#!/bin/bash
+
+even_count=0
+for num in "$@"; do
+    if (( num % 2 == 0 )); then
+        (( even_count++ ))
+    fi
+done
+
+echo "Number of even numbers : $even_count"
+
+macbook@MacBooks-MacBook-Air Desktop % bash evencount.sh 1 2 3 4 5
+Number of even numbers : 2
+
+

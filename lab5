@@ -1,0 +1,106 @@
+1)Ստեղծել կամայական արժեքով փոփոխական՝ str: Ցուցադրել հետեւյալ հրամանների աշխատանքի արդյունքի տարբերությունը. echo $str2 echo ${str}2  
+macbook@MacBooks-MacBook-Air ~ % str="hello"
+macbook@MacBooks-MacBook-Air ~ % echo $str2 
+macbook@MacBooks-MacBook-Air ~ % echo ${str}2
+hello2
+
+2)Արտածել հետևյալ արտահայտության արժեքը․ (5^2∗4)/10
+
+macbook@MacBooks-MacBook-Air ~ echo $((5**2*4/10))
+10
+
+3) Ցուցադրել հետևյալ հրամանների աշխատանքի արդյունքի տարբերությունը․
+echo "The balance for user $USER is: $5.00"
+echo "The balance for user $USER is: \$5.00"
+
+macbook@MacBooks-MacBook-Air ~ % echo "The balance for user $USER is: $5.00"
+The balance for user macbook is: .00
+macbook@MacBooks-MacBook-Air ~ % echo "The balance for user $USER is: \$5.00"
+The balance for user macbook is: $5.00
+
+4)Ցուցադրել հետևյալ հրամանների աշխատանքի արդյունքի տարբերությունը․
+echo '$USER $((2 + 2)) $(ls)'
+echo "$USER $((2 + 2)) $(ls)"
+
+macbook@MacBooks-MacBook-Air ~ % echo '$USER $((2 + 2)) $(ls)'
+$USER $((2 + 2)) $(ls)
+
+//դիտարկում է որպես output
+macbook@MacBooks-MacBook-Air ~ % echo "$USER $((2 + 2)) $(ls)"
+macbook 4 Applications
+Desktop
+Documents
+Downloads
+IdeaProjects
+Library
+//կտպի թղթապանակի պարունակությունը
+
+5)Առանձին տողերում արտածել ընթացիկ դիրեկտորիան և այնտեղ առկա տեքստային
+ֆայլերի քանակը։ Օգտագործել Here document:
+
+macbook@MacBooks-MacBook-Air ~ % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash namesofdir.sh
+Current Directory: /Users/macbook/Desktop
+Text in Current Directory:
+total 2896
+-rw-r--r--@  1 macbook  staff     234 Dec  7 21:37 2,3,5 2.sh
+-rw-r--r--@  1 macbook  staff     232 Dec  7 21:08 2,3,5.sh
+-rw-r--r--@  1 macbook  staff      92 Dec  8 20:41 3mult.sh
+-rw-r--r--@  1 macbook  staff     804 Nov 19 22:18 Calendar
+-rw-r--r--@  1 macbook  staff     804 Nov 19 22:19 Find My
+drwxr-xr-x@  4 macbook  staff     128 Dec 27  2022 Harvard .app
+drwxr-xr-x@  3 macbook  staff      96 Aug 27 14:27 IntelliJ IDEA CE.app
+drwxr-xr-x@ 13 macbook  staff     416 Nov 19 22:14 M'
+-rw-r--r--@  1 macbook  staff     804 Jul 25 11:17 Music
+.
+.
+.
+Number of Files:       60
+// մի քանիսն եմ գրել
+
+
+6)Գրել 2 թվեր գումարող ֆունկցիա։ Թվերը ֆունկցիային փոխանցել որպես արգումենտներ։  
+
+ sum() {
+        sum=$(( $1 + $2 ))
+        echo "sum= $sum"
+    }
+sum 1 11
+
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash sumfunction().sh
+12
+
+7)Գրել ֆունկցիա, որը որպես արգումենտ կստանա դիրեկտորիայի անվանումը եւ կարտածի այնտեղ առկա ֆայլերի քանակը։ 
+#!/bin/bash
+count(){
+       cd $1
+       echo $(ls | wc -l)
+count /Users/Desktop
+
+ macbook@MacBooks-MacBook-Air Desktop % bash countfunction().sh 
+63
+
+
+8)Գրել սկրիպտ, որում նոր ստեղծված ֆայլի համար ստուգել, թե արդյոք այն ունի
+կարդալու / գրելու / կատարելու թույլտվություն, և արտածել համապատասխան
+հաղորդագրություն։
+
+macbook@MacBooks-MacBook-Air Desktop % touch newfile.txt
+macbook@MacBooks-MacBook-Air Desktop % chmod +x checking.sh
+macbook@MacBooks-MacBook-Air Desktop % ./checking.sh newfile.txt
+new_file.txt does not have read permission.
+new_file.txt does not have write permission.
+new_file.txt does not have execute permission.
+
+9)Գրել սկրիպտ, որը կորոշի տրված 2 թվերից մեծագույնը եւ կարտածի։  
+macbook@MacBooks-MacBook-Air Desktop % chmod +x maxnum.sh
+macbook@MacBooks-MacBook-Air Desktop % ./maxnum.sh 
+max 10 
+
+10)Գրել սկրիպտ, որը կորոշի տրված թիվը զույգ է, թե կենտ։ Արտածել համապատասխան  հաղորդագրություն։  
+
+macbook@MacBooks-MacBook-Air Desktop % chmod +x evenodd5.sh
+macbook@MacBooks-MacBook-Air Desktop % ./evenodd5.sh
+Enter a number: 746
+746 is even

@@ -1,0 +1,79 @@
+1)Ցուցադրել /etc դիրեկտորիայի բոլոր ֆայլերը, որոնց անվան մեջ թվանշան կա։ 
+ macbook@MacBooks-MacBook-Air ~ % cd Desktop
+macbook@MacBooks-MacBook-Air Desktop % mkdir ect
+macbook@MacBooks-MacBook-Air Desktop % cd ect
+macbook@MacBooks-MacBook-Air ect % touch file1 file2 file3 file
+macbook@MacBooks-MacBook-Air ect % ls| grep -E '[0-9]' 
+file1
+file2
+file3
+
+2)Ստեղծել որոշակի պարունակությամբ ֆայլ։ Ֆայլում փնտրել այլ տողերը, որոնք  բաղակացած են 5 տառից, եւ ավարտվում են lo տառերով։  
+macbook@MacBooks-MacBook-Air ect % cat>file
+Eeelo
+eeeli
+12345
+macbook@MacBooks-MacBook-Air ~ % grep -E'^[[:alpha:]]{3}lo' file.txt
+Eeelo
+
+3)Ցուցադրել հետեւյալ հրամանների տարբերությունը.  
+macbook@MacBooks-MacBook-Air ~ % grep -h[A-Z]' file.txt //մեծատառ 
+Eeelo
+macbook@MacBooks-MacBook-Air ~ % grep -h'[-AZ]' file.txt //AZ-ովները
+macbook@MacBooks-MacBook-Air ~ % grep -h^[A-Z]’ file.txt //սկսվող
+Eeelo
+macbook@MacBooks-MacBook-Air ~ % grep -h’[^A-Z]’ file.txt //մեծատառ չունի
+eeeli
+12345
+
+
+4)dirlist-bin.txt եւ dirlist-sbin.txt ֆայլերում փնտրել այն տողերը, որոնք սկսվում են bz կամ zip բառերով։  
+macbook@MacBooks-MacBook-Air ~ % grep -E '^(bz|zip)' dirlist-bin.txt
+bzcat.exe*
+bzcmp*
+bzdiff*
+bzegrep*
+bzfgrep*
+bzgrep*
+bzip2.exe*
+bzip2recover.exe*
+bzless*
+zipgrep*
+zipinfo.exe*
+
+5)Ցուցադրել հետեւյալ հրամանների տարբերությունը.  
+grep -Eh '^(bz|gz|zip)' dirlist*.txt - տողեր որոնք սկսում են այս bz,gz,zip-ով
+
+grep -Eh '^bz|gz|zip' dirlist*.txt -տողեր որ սկսում են bz-ով, իրոնց մեջ պարունակում են gz,zip  
+
+6)Ստուգել տրված էլ. հասցեի վավերականությունը։ Օր.՝ test@test.com  
+macbook@MacBooks-MacBook-Air ~ % echo test@test.com | grep '@test.com$' 
+test@test.com
+
+7)Ստուգել տրված IPv4 հասցեի վավերականությունը։ Օր.՝ 192.168.0.1  
+macbook@MacBooks-MacBook-Air ~ % ip="192.168.0.1"
+echo "$ip" | awk -F'.' '{if ($1 <= 255 && $2 <= 255 && $3 <= 255 && $4 <= 255) print "Valid IPv4"; else print "Invalid IPv4"}'
+
+Valid IPv4
+
+8)Ստեղծել որոշակի պարունակությամբ ֆայլ, որի տողերից մեկում գրել Level բառը։ Ֆայլում փնտրել այն տողերը, որոնք պարունակում են 5 տառից բաղկացած պալինդրոմներ (բառեր, որոնք 2 ուղղություններով կարդացվում են նույնաբար)։  
+macbook@MacBooks-MacBook-Air ~ % echo "civic" > palindromes.txt
+echo "radar" >> palindromes.txt
+echo “Level" >> palindromes.txt
+echo "stats" >> palindromes.txt
+echo "hello" >> palindromes.txt
+echo "solar” >> palindromes.txt
+echo “era" >> palindromes.txt
+macbook@MacBooks-MacBook-Air ~ % grep -iE '^(.)(.).\2\1$' palindromes.txt 
+civic
+radar
+Level
+stats
+
+9)Տրված է հետեւյալ ամսաթիվը. 01/02/1970 
+macbook@MacBooks-MacBook-Air ~ % echo "1990/06/01" | sed 's/\([0-9]\{4\}\)\/\([0-9]\{2\}\)\/\([0-9]\{2\}\)/\3-\2-\1/'
+01-06-1990
+
+10)Տրված է հետեւյալ հեռախոսահամարը. 0xx 12-34-56 Ձեւափոխել այն՝ բերելով հետեւյալ ֆորմատի. (0xx) 123-456  
+macbook@MacBooks-MacBook-Air ~ % echo "0xx 12-34-56" | sed -E "s~([0][a-z]{2})[[:space:]]([0-9]{2})[-]([0-9])([0-9])[-]([0-9]{2})~(\1) \2\3-\4\5~"
+(0xx) 123-456

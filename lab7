@@ -1,0 +1,304 @@
+
+1. Գրել ծրագիր, որը կարտածի [0, 20] միջակայքի զույգ թվերը։ Օգտագործել while ցիկլ։
+
+#!/bin/bash
+
+i=0
+
+while [ $i -le 20 ]; do
+    if [ $((i % 2)) -eq 0 ]; then
+        echo $i
+    fi
+    ((i++))
+done
+
+macbook@MacBooks-MacBook-Air ~ % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash evenodd.sh
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+
+
+2. Կատարել 1-ին առաջադրանքը՝ օգտագործելով until ցիկլ։
+
+#!/bin/bash
+
+i=0
+
+until [ $i -gt 20 ]; do
+    if [ $((i % 2)) -eq 0 ]; then
+        echo $i
+    fi
+    ((i++))
+done
+
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash oddeven.sh
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+
+3. Գրել ծրագիր, որը գտնվում է անվերջ ցիկլի մեջ։ Ցիկլի յուրաքանչյուր իտերացիայում արտածել տվյալ ինդեքսի քառակուսին։ Ցիկլը ավարտել այն պահին, երբ արտածվող թիվը կգերազանցի 1000։ Օգտագործել while ցիկլ։
+
+#!/bin/bash
+
+index=1
+
+while true;
+do
+    square=$((index * index))
+
+    if [ $square -gt 1000 ]; then
+        break
+    fi
+
+    echo "Square of $index is $square"
+    ((index++))
+done
+
+macbook@MacBooks-MacBook-Air Desktop % cd  /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash pow2.sh
+Square of 1 is 1
+Square of 2 is 4
+Square of 3 is 9
+Square of 4 is 16
+Square of 5 is 25
+Square of 6 is 36
+Square of 7 is 49
+Square of 8 is 64
+Square of 9 is 81
+Square of 10 is 100
+Square of 11 is 121
+Square of 12 is 144
+Square of 13 is 169
+Square of 14 is 196
+Square of 15 is 225
+Square of 16 is 256
+Square of 17 is 289
+Square of 18 is 324
+Square of 19 is 361
+Square of 20 is 400
+Square of 21 is 441
+Square of 22 is 484
+Square of 23 is 529
+Square of 24 is 576
+Square of 25 is 625
+Square of 26 is 676
+Square of 27 is 729
+Square of 28 is 784
+Square of 29 is 841
+Square of 30 is 900
+Square of 31 is 961
+
+
+4. Կատարել 1-ին առաջադրանքը՝ օգտագործելով for ցիկլ։
+
+#!/bin/bash
+
+echo "even numbers :"
+
+for ((i = 0; i <= 20; i += 2)); do
+    echo "$i"
+done
+
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash for1-20.sh
+even numbers :
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+
+5. Գրել ծրագիր, որը որպես մուտքային տվյալ կստանա ամբողջ թիվ եւ կարտածի դրա կրկնապատիկը։ Ծրագիրը սկսելիս ցուցադրել հետեւյալ հաղորդագրությունը.
+Enter an integer number, or enter q to quit:
+Ամբողջ թիվ մուտքագրելուց հետո ցուցադրել դրա կրկնապատիկը, եւ կրկին ցուցադրել հաղորդագրությունը՝ մինչեւ q տառի սեղմումը։
+
+#!/bin/bash
+
+while true; do
+    read -p "Enter an integer number, or enter 'q' to quit: " input
+    
+    if [[ "$input" == "q" ]]; then
+        echo "end of program."
+        break
+    fi
+
+
+    if [[ "$input" =~ ^[0-9]+$ ]]; then
+        doubled=$((input * 2))
+        echo "Double of $input is $doubled"
+    else
+        echo "Invalid number."
+    fi
+done
+
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash double.sh
+Enter an integer number, or enter 'q' to quit: 66
+Double of 66 is 132
+Enter an integer number, or enter 'q' to quit: 7
+Double of 7 is 14
+Enter an integer number, or enter 'q' to quit: 128379187
+Double of 128379187 is 256758374
+Enter an integer number, or enter 'q' to quit: q
+end of program.
+
+6. Գրել ծրագիր, որը կստեղծի /home/student դիրեկտորիայի տեքստային ֆայլերի անունները պարունակող ֆայլ։ while ցիկլի միջոցով համարակալել այս ֆայլերի անունները եւ արտածել։
+
+#!/bin/bash
+
+i=1
+
+while read -r name; do
+    filename="/home/student/file_$i.txt"
+    echo "$name" > "$filename"
+    echo "$file_name with name: $name"
+    ((i++))
+done < names.txt
+
+macbook@MacBooks-MacBook-Air Desktop % bash filename.sh
+File 1: /Users/Desktop/calc.sh
+File 2: /Users/Desktop/numpos.sh
+File 3: /Users/Desktop/3mult.sh
+       
+7. Գրել ծրագիր, որը for ցիկլի միջոցով կարտածի [0, 30] միջակայքում գտնվող 3-ի բազմապատիկ թվերը։
+
+#!/bin/bash
+
+echo "Multiples of 3 :"
+
+for ((i = 0; i <= 30; i += 3)); do
+    echo "$i"
+done
+
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash 3mult.sh
+Multiples of 3 :
+0
+3
+6
+9
+12
+15
+18
+21
+24
+27
+30
+
+8. Գրել ծրագիր, որը for ցիկլի միջոցով կարտածի ընթացիկ դիրեկտորիայի բոլոր տեքստային ֆայլերի անունները։
+
+#!/bin/bash
+
+echo "Text files in the current directory:"
+
+for file in *.txt; do
+    echo "$file"
+done
+
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash filenames.sh
+Text files in the current directory:
+hanrahashiv.txt
+
+9. Գրել ծրագիր, որը որպես արգումենտ կստանա ֆայլերի անուններ, եւ այդ ֆայլերից յուրաքանչյուրի համար կարտածի ֆայլի ամենակարճ բառը եւ դրա երկարությունը։
+
+#!/bin/bash
+
+if [ "$#" -eq 0 ]; then
+    echo "Please provide file names as arguments."
+    exit 1
+fi
+
+
+for file in "$@"; do
+    echo "Shortest word in $file:"
+    
+ if [ ! -f "$file" ]; then
+        echo "File '$file' does not exist."
+    else
+      
+        shortest_word=$(awk '{print length, $0}' "$file" | awk 'NR==1 || $1 < min {line=$0; min=$1} END{print line}')
+        
+        shortest_length=$(echo "$shortest_word" | awk '{print $1}')
+        shortest_word=$(echo "$shortest_word" | cut -d ' ' -f2-)
+        
+        echo "Shortest word: $shortest_word"
+        echo "Length: $shortest_length"
+    fi
+    
+    echo "--------------------------"
+done
+
+macbook@MacBooks-MacBook-Air Desktop % bash shorter.sh
+Please provide file names as arguments.
+macbook@MacBooks-MacBook-Air Desktop % bash shorter.sh file1.txt file2.txt
+Shortest word in file1.txt:
+File 'file1.txt' does not exist.
+--------------------------
+Shortest word in file2.txt:
+File 'file2.txt' does not exist.
+--------------------------
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash shorter.sh hanrahashiv.txt
+Shortest word in hanrahashiv.txt:
+Shortest word: 
+//hanrahashiv.txt դատարկ է
+
+10. Գրել ծրագիր, որը որպես արգումենտներ կստանա ֆայլերի անուններ, եւ դրանցից յուրաքանչյուրի համար կստուգի, թե արդյո՞ք տվյալ ֆայլը գոյություն ունի, թե ոչ։ Գոյություն ունենալու դեպքում ստուգել, թե արդյո՞ք ֆայլն ունի կարդալու թույլտվություն։ Արտածել համապատասխան հաղորդագրություններ։
+#!/bin/bash
+for (( i=0; i<5; i=i+1 )); do echo $i
+done
+5
+
+#!/bin/bash
+
+
+for file in "$@"; do
+    echo "Checking file: $file"
+    
+    
+    if [ -e "$file" ]; then
+        echo "File '$file' exists."
+        
+       
+        if [ -r "$file" ]; then
+            echo " '$file' has read permission."
+        else
+            echo" '$file' has not read permission."
+        fi
+    else
+        echo "File '$file' does not exist."
+    fi
+    
+   
+done
+
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash permission.sh hanrahashiv.txt
+Checking file: hanrahashiv.txt
+File 'hanrahashiv.txt' exists.
+‘hanrahashiv.txt' has read permission.

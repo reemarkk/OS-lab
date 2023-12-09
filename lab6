@@ -1,0 +1,239 @@
+1)Գրել սկրիպտ, որը տրված թվի համար կարտածի հաղորդագրություն այն մասին, արդյոք թիվը դրական է, բացասական, թե՝ 0։ Թիվը վավերացնել ռեգուլյար արտահայտության միջոցով։ Պայմանների ստուգման համար օգտագործել [[ ]] օպերատորը։  
+
+#!/bin/bash
+
+read -p "Enter a number: " number
+
+if [[ $number =~ ^[-+]?[0-9]*\.?[0-9]+$ ]]; then
+    if [[ $number -gt 0 ]]; then
+        echo "The number is positive."
+    elif [[ $number -lt 0 ]]; then
+        echo "The number is negative."
+    else
+        echo "The number is 0."
+    fi
+else
+    echo "Invalid input. Please enter a valid number."
+fi
+
+￼macbook@MacBooks-MacBook-Air ~ % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash number_+-_check.sh
+Enter a number: -4
+The number is negative
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash number_+-_check.sh 
+Enter a number: 0
+The number is 0
+
+2)Կատարել 1-ին կետը՝ պայմանների ստուգման համար օգտագործելով (( )) օպերատորը։  
+
+#!/bin/bash
+read -p "Enter number: " num
+if [[ "num" =~ ^-?[0-9]+$ ]]; then 
+if [[ $num -eq 0 ]]; then
+echo "num is zero." 
+else
+if [[ $num -ge 0 ]];
+ then
+echo "num is greater than zero."
+fi
+if [[ $num -le 0 ]]; then
+echo "num is less than zero."
+fi fi
+else
+echo "num is not an integer." 
+fi
+
+￼macbook@MacBooks-MacBook-Air ~ % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash num_2.sh
+Enter a number: 3947
+The number is positive
+
+
+3)Գրել սկրիպտ, որը կստուգի, թե արդյոք տրված թիվը 2-ի, 3-ի եւ 5-ի բազմապատիկ է։  
+
+#!/bin/bash
+
+read -p "Enter a number: " num
+
+if (( num % 2 == 0 )) && (( num % 3 == 0 )) && (( num % 5 == 0 )); then
+    echo "$num is divisible by 2, 3, and 5"
+else
+    echo "$num is not divisible by 2, 3, and 5 simultaneously"
+fi
+
+￼macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash 2,3,5.sh
+Enter a number: 67
+67 is not divisible by 2, 3, and 5 simultaneously
+
+ 4)Գրել սկրիպտ, որը կստուգի, թե արդյոք տրված թիվը 2-ի, 3-ի կամ 5-ի բազմապատիկ է։  
+
+#!/bin/bash
+
+read -p "Մուտքագրեք թիվը: " num
+
+if (( num % 2 == 0 )); then
+    echo "$num -ը բաժանվում է 2-ի"
+else
+    echo "$num -ը չի բաժանվում 2-ի"
+fi
+
+if (( num % 3 == 0 )); then
+    echo "$num -ը բաժանվում է 3-ի"
+else
+    echo "$num -ը չի բաժանվում 3-ի"
+fi
+
+if (( num % 5 == 0 )); then
+    echo "$num -ը բաժանվում է 5-ի"
+else
+    echo "$num -ը չի բաժանվում 5-ի"
+fi
+
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash div.sh
+Մուտքագրեք թիվը: 30
+30 -ը բաժանվում է 2-ի
+30 -ը բաժանվում է 3-ի
+30 -ը բաժանվում է 5-ի
+
+5)Մեկ հրամանի միջոցով ստեղծել նոր ֆայլ եւ այդ ֆայլին ավելացնել կատարելու թույլտվություն։  
+
+macbook@MacBooks-MacBook-Air ~ % touch file.txt && chmod a+x file.txt
+
+6)Մեկ հրամանի միջոցով ստուգել, թե արդյոք գոյություն ունի dir անունով դիրեկտորիա, եւ, եթե գոյություն չունի, ապա ստեղծել։  
+ mkdir -p dir
+
+7)Գրել սկրիպտ, որը կստուգի, թե արդյոք տրված թիվը գտնվում է սահմանված միջակայքում։ Ստուգվող թիվը եւ միջակայքի սահմանների թվերը ներմուծել read հրամանի միջոցով։ Իրականացնել տվյալների վավերացում։  
+
+#!/bin/bash
+
+check_range() {
+    local num=$1
+    local lower_limit=$2
+    local upper_limit=$3
+
+    if [ "$num" -ge "$lower_limit" ] && [ "$num" -le "$upper_limit" ]; then
+        echo "$num is within the range $lower_limit-$upper_limit."
+    else
+        echo "$num is NOT within the range $lower_limit-$upper_limit."
+    fi
+}
+
+
+read -p "Enter a number: " input_number
+
+if ! [[ "$input_number" =~ ^[+-]?[0-9]+([.][0-9]+)?$ ]]; then
+    echo "Please enter a valid number."
+else
+    read -p "Enter the lower limit of the range: " lower_limit
+    read -p "Enter the upper limit of the range: " upper_limit
+
+   
+    if ! [[ "$lower_limit" =~ ^[+-]?[0-9]+([.][0-9]+)?$ && "$upper_limit" =~ ^[+-]?[0-9]+([.][0-9]+)?$ ]]; then
+        echo "Please enter valid range limits."
+    else
+        check_range "$input_number" "$lower_limit" "$upper_limit"
+    fi
+fi
+
+￼macbook@MacBooks-MacBook-Air Desktop % bash range.sh
+Enter a number: 7
+Enter the lower limit of the range: 1
+Enter the upper limit of the range: 3
+7 is NOT within the range 1-3.
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash range.sh
+Enter a number: 7
+Enter the lower limit of the range: `
+Enter the upper limit of the range: 0
+Please enter valid range limits.
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash range.sh
+Enter a number: 9
+Enter the lower limit of the range: 1
+Enter the upper limit of the range: 100
+9 is within the range 1-100.
+
+
+8)Գրել սկրիպտ, որը որպես ներմուծվող արժեք կստանա մեկ բառ, եւ կստուգի արդյոք այն համընկնում է "Secret" բառի հետ։ read հրամանը կատարել այնպես, որ ներմուծված արժեք պահպանվի REPLY փոփոխականի մեջ, իսկ ներմուծումն իրականացնելիս տառերը չցուցադրվեն էկրանին։  
+
+#!/bin/bash
+
+read -s -p "Enter a word: "
+
+
+if [[ "$REPLY" == "Secret" ]]; then
+    echo "The word is 'Secret'."
+else
+    echo "The word is NOT 'Secret'."
+fi
+
+￼macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash secret.sh
+Enter a word: The word is NOT 'Secret'.
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash secret.sh
+Enter a word: The word is 'Secret'.
+
+ 9)Գրել սկրիպտ, որը որպես ներմուծվող արժեք կստանա ֆայլի անուն։ Վավերացնել անունը հետեւյալ կանոններով. կարող է պարունակել տառեր, թվեր, - . _ սիմվոլները։ Եթե նման ֆայլ գոյություն չունի, ապա ստեղծել։ Ցուցադրել համապատասխան հաղորդագրություն ֆայլի ստեղծման կամ առկայության մասին։  
+
+#!/bin/bash
+
+read -p "Enter a file name: " file_name
+
+pattern='^[a-zA-Z0-9_.-]+$'
+
+if [[ ! $file_name =~ $pattern ]]; then
+    echo "Invalid file name."
+else
+    if [ -f "$file_name" ]; then
+        echo "The file '$file_name' already exists."
+    else
+        touch "$file_name"
+        echo "The file '$file_name' has been created."
+    fi
+fi
+
+￼macbook@MacBooks-MacBook-Air Desktop % bash filename.sh
+Enter a file name: range.sh
+The file 'range.sh' already exists.
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash filename.sh
+Enter a file name: hanrahashiv.txt
+The file 'hanrahashiv.txt' has been created. 
+
+10)	Գրել <<Հաշվիչ>> ծրագիր, որը կստանա ճիշտ 3 արժեք հետեւյալ հաջորդականությամբ. թիվ, գործողություն, թիվ։ Օր՝ 2 + 3։ Ստուգել ներմուծված արժեքների քանակը, եւ 3-ից տարբեր լինելու դեպքում արտածել հաղորդագրություն սխալի մասին։ Իրականացնել արժեքների վավերացում։ Գործողության համար սահմանել հետեւյալ ընդունելի արժեքները. + - * / **։ Արտածել գործողության արդյունքը։  
+
+#!/bin/bash
+if [ "$#" -ne 3 ]; then
+    echo "Error: Please provide exactly 3 values (number, action, number)."
+    exit 1
+fi
+
+
+number1=$1
+action=$2
+number2=$3
+
+if ! [[ "$number1" =~ ^[+-]?[0-9]*[.]?[0-9]+$ && "$number2" =~ ^[+-]?[0-9]*[.]?[0-9]+$ ]]; then
+    echo "Error: Invalid number input."
+    exit 1
+fi
+
+case "$action" in
+    "+" | "-" | "*" | "/" | "**")
+        result=$(bc -l <<< "$number1 $action $number2")
+        echo "Result: $result"
+        ;;
+    *)
+        echo "Error: Invalid action. Please use one of the following: +, -, *, /, **"
+        exit 1
+        ;;
+esac
+
+macbook@MacBooks-MacBook-Air Desktop % cd /Users/macbook/Desktop
+macbook@MacBooks-MacBook-Air Desktop % bash calc.sh 2 + 6
+Result: 8
+

@@ -1,0 +1,60 @@
+1)Ստեղծել նոր ֆայլ՝ file.txt, եւ դրա համար սահմանել հետեւյալ իրավունքները. - rwx r-- r--  
+macbook@MacBooks-MacBook-Air ~ % mkdir new
+macbook@MacBooks-MacBook-Air ~ % cd new
+macbook@MacBooks-MacBook-Air new % touch file.txt
+macbook@MacBooks-MacBook-Air new % chmod 744 file.txt
+
+2)Փոփոխել file.txt ֆայլի իրավունքները՝ բոլոր օգտատերերի համար ավելացնելով կատարելու իրավունք։ Օգտվել ֆայլի ռեժիմների սիմվոլիկ ներկայացումից։  
+macbook@MacBooks-MacBook-Air new % chmod a+x file.txt
+
+3)Փոփոխել file.txt ֆայլի իրավունքները՝ խմբի օգտատերերի եւ այլ օգտատերերի համար հեռացնելով կատարելու իրավունքը։ Օգտվել սիմվոլիկ ներկայացումից։  
+macbook@MacBooks-MacBook-Air new % chmod go-x file.txt
+
+4)Փոփոխել file.txt ֆայլի իրավունքները՝ հեռացնելով բոլոր իրավունքները, եւ սահմանելով գրելու եւ կարդալու իրավունքներ միայն ֆայլի սեփականատիրոջ համար։ Նույն գործողությունը կատարել 2 անգամ ՝ օգտվելով ֆայլի ռեժիմների 8-ական եւ սիմվոլիկ ներկայացումներից։  
+macbook@MacBooks-MacBook-Air new % chmod a=- file.txt
+macbook@MacBooks-MacBook-Air new % chmod u=rw file.txt
+macbook@MacBooks-MacBook-Air new %  chmod 600 file.txt
+
+5)Ստեղծել նոր դիրեկտորիա՝ dir: Սահմանել հետեւյալ իրավունքները. d rw- rw- rw-։ dir դիրեկտորիայում ստեղծել նոր ֆայլ՝ file.txt։ Բացատրել ստացված հաղորդագրությունը։ Փոփոխել դիրեկտորիայի իրավունքներն այնպես, որ ֆայլը հաջողությամբ ստեղծվի։  
+macbook@MacBooks-MacBook-Air new % mkdir dir
+macbook@MacBooks-MacBook-Air new % chmod 666 dir
+macbook@MacBooks-MacBook-Air new % cd dir
+cd: permission denied: dir
+//not allowed to do it
+macbook@MacBooks-MacBook-Air new % chmod 777 dir
+macbook@MacBooks-MacBook-Air new % cd dir
+macbook@MacBooks-MacBook-Air dir % touch file.txt
+
+6)dir դիրեկտորիայում ստեղծել եւս 2 ֆայլ՝ file1.txt, file2.txt։ Մեկ հրամանի կատարմամբ փոփոխել դիրեկտորիայի բոլոր ֆայլերի իրավունքները՝ սահմանելով - rwx rw- rw-։  
+macbook@MacBooks-MacBook-Air dir % touch file1.txt file2.txt
+macbook@MacBooks-MacBook-Air dir % cd ..
+macbook@MacBooks-MacBook-Air new % chmod -R 755 dir
+
+7)umask հրամանի միջոցով սահմանել այնպիսի bitmask, որ նոր ստեղծվող ֆայլերը լռելյայն կերպով ունենան հետեւյալ իրավունքները. - rw- r-- ---  
+macbook@MacBooks-MacBook-Air new % umask 0026
+
+8)umask հրամանի միջոցով սահմանել այնպիսի bitmask, որ նոր ստեղծվող ֆայլերը լռելյայն կերպով ունենան հետեւյալ իրավունքները. - rw- --- ---: Վերադարձնել bitmask-ի լռելյայն արժեքը՝ կատարելով umask 0022 հրամանը։  
+macbook@MacBooks-MacBook-Air new % umask 0066
+macbook@MacBooks-MacBook-Air new % umask 0022
+
+9)Ստեղծել սկրիպտ, որը կարտածի /home/student դիրեկտորիայի ֆայլերի ցուցակը։ Սկրիպտի համար սահմանել - -wx r-- r-- իրավունքները։ Կատարել սկրիպտը եւ բացատրել ստացված հաղորդագրությունը։ Փոփոխել իրավունքներն այնպես, որ սկրիպտը կատարվի։ 
+
+macbook@MacBooks-MacBook-Air ~ % touch myscript
+macbook@MacBooks-MacBook-Air ~ % cat >myscript
+#!/bin/bash
+ls
+macbook@MacBooks-MacBook-Air ~ % chmod 344 myscript
+macbook@MacBooks-MacBook-Air ~ % ./myscript
+ Permission denied
+macbook@MacBooks-MacBook-Air ~ % chmod 744 myscript
+macbook@MacBooks-MacBook-Air ~ % ./myscript
+IdeaProjects		fil1.txt		palindromes.txt
+Library			file.txt		script
+Movies			file1.txt		script_1
+
+
+10)Սկրիպտը տեղադրել ~/bin դիրեկտորիայում։ Փոփոխել $PATH փոփոխականն այնպես, որ սկրիպտը հնարավոր լինի կատարել առանց հասցեն նշելու։ 
+
+macbook@MacBooks-MacBook-Air ~ % mv myscript ~/bin
+macbook@MacBooks-MacBook-Air ~ % export PATH=~/bin:"$PATH"
+

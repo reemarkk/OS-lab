@@ -38,6 +38,13 @@ Library
 5)Առանձին տողերում արտածել ընթացիկ դիրեկտորիան և այնտեղ առկա տեքստային
 ֆայլերի քանակը։ Օգտագործել Here document:
 
+cat <<EOF
+Current Directory: $(pwd)
+Text in Current Directory:
+$(ls -l)
+Number of Files: $(ls | wc -l)
+EOF
+
 macbook@MacBooks-MacBook-Air ~ % cd /Users/macbook/Desktop
 macbook@MacBooks-MacBook-Air Desktop % bash namesofdir.sh
 Current Directory: /Users/macbook/Desktop
@@ -86,6 +93,30 @@ count /Users/Desktop
 կարդալու / գրելու / կատարելու թույլտվություն, և արտածել համապատասխան
 հաղորդագրություն։
 
+file="new_file.txt"
+
+
+if [ -r "$file" ]; then
+    echo "$file has read permission."
+else
+    echo "$file does not have read permission."
+fi
+
+
+if [ -w "$file" ]; then
+    echo "$file has write permission."
+else
+    echo "$file does not have write permission."
+fi
+
+
+if [ -x "$file" ]; then
+    echo "$file has execute permission."
+else
+    echo "$file does not have execute permission."
+fi
+
+
 macbook@MacBooks-MacBook-Air Desktop % touch newfile.txt
 macbook@MacBooks-MacBook-Air Desktop % chmod +x checking.sh
 macbook@MacBooks-MacBook-Air Desktop % ./checking.sh newfile.txt
@@ -94,11 +125,33 @@ new_file.txt does not have write permission.
 new_file.txt does not have execute permission.
 
 9)Գրել սկրիպտ, որը կորոշի տրված 2 թվերից մեծագույնը եւ կարտածի։  
+
+#!/bin/bash 
+a=9
+b=10
+if [ "$a" -gt "$b" ]; then
+    echo "max $a"
+elif [ "$a" -lt "$b" ]; then
+    echo "max $b "
+else
+    echo "$a=$b "
+fi
+
 macbook@MacBooks-MacBook-Air Desktop % chmod +x maxnum.sh
 macbook@MacBooks-MacBook-Air Desktop % ./maxnum.sh 
 max 10 
 
 10)Գրել սկրիպտ, որը կորոշի տրված թիվը զույգ է, թե կենտ։ Արտածել համապատասխան  հաղորդագրություն։  
+
+#!/bin/bash
+
+read -p "Enter a number: " number
+
+if ((number % 2 == 0)); then
+    echo "$number is even"
+else
+    echo "$number is odd"
+fi
 
 macbook@MacBooks-MacBook-Air Desktop % chmod +x evenodd5.sh
 macbook@MacBooks-MacBook-Air Desktop % ./evenodd5.sh
